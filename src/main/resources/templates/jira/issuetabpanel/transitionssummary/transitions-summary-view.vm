@@ -28,34 +28,40 @@
     </tr>
 
     #foreach ($tran in ${action.getTransitions()})
-	    <tr>
-			<td bgcolor="#ffffff" width=34% valign=top>
-		    	<table width="100%">
-		        	<tr>
-	            		#statusWithIcon ($tran.fromStatus)
-		                <td align="center" nowrap="nowrap" width=6% valign=top>
-		                	<img src="${req.getContextPath()}/images/icons/arrow_right_small.gif" align="absmiddle" border="0" height="16" width="16" />
-		                </td>
-	            		#statusWithIcon ($tran.toStatus)
-		            </tr>
-				</table>
-            </td>
-			<td width=15% valign=top align=left>
-              	${tran.durationAsString}
-		    </td>
-			<td width=15% valign=top align=center>
-            	${tran.timesToTransition}
-		    </td>
-			<td width=18% valign=top>
-				#if (${action.isUserExists(${tran.lastUpdater})})
-					#authorlink (${tran.lastUpdater})
-				#else
-					${tran.lastUpdater}
-				#end
-	        </td>
-			<td width=18% valign=top align=right>
-    	    	${tran.lastUpdateAsString}
-        	</td>
-		</tr>
+    
+    	#if( !$tran.fromStatus.name.startsWith( "Finish "))
+		    <tr>
+				<td bgcolor="#ffffff" width=34% valign=top>
+			    	<div style="display:none">
+			    		${tran.durationInSeconds}
+			    	</div>
+			    	<table width="100%">
+			        	<tr>
+		            		#statusWithIcon ($tran.fromStatus)
+			                <td align="center" nowrap="nowrap" width=6% valign=top>
+			                	<img src="${req.getContextPath()}/images/icons/arrow_right_small.gif" align="absmiddle" border="0" height="16" width="16" />
+			                </td>
+		            		#statusWithIcon ($tran.toStatus)
+			            </tr>
+					</table>
+	            </td>
+				<td width=15% valign=top align=left>
+	              	${tran.durationAsString}
+			    </td>
+				<td width=15% valign=top align=center>
+	            	${tran.timesToTransition}
+			    </td>
+				<td width=18% valign=top>
+					#if (${action.isUserExists(${tran.lastUpdater})})
+						#authorlink (${tran.lastUpdater})
+					#else
+						${tran.lastUpdater}
+					#end
+		        </td>
+				<td width=18% valign=top align=right>
+	    	    	${tran.lastUpdateAsString}
+	        	</td>
+			</tr>
+		#end
 	#end
 </table>
